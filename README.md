@@ -49,7 +49,7 @@ Based on [honey-pi.de](honey-pi.de), I combined the following parts:
 1. Small car battery, solar panel, charging module
 2. Raspberry Pi Zero (not Zero W) mini linux computer, containing prebuilt Python agents for data upload
 3. Sensors:
-    - 1x DHT22 sensor for temperature & humidity inside the beehive
+    - 1x DHT22 sensor for temperature & humidity inside the beehive (custom case for bee protection)
     - 1x DHT22 sensor for temperature & humideity outside
     - 1x Bosche H30a weight cell + HX711 weightcell amplifier for continuously weighting the whole beehive
     - 1x voltage divider for checking battery voltage (of around 12V)
@@ -63,47 +63,67 @@ Based on [honey-pi.de](honey-pi.de), I combined the following parts:
 **Advantages of the system**:
 - completely autonomous, if you ignore mobile radio connection strength and if you choose a free mobile phone contract
 - beefy power supply & a lot of processing power
+- Convenient webservice for configuration
 
 **Disadvantages of the system**:
-- Linux on an IoT device is overkill (I do not need a lot of data analysis)
-- I still do not really understand, what those Python scripts really do and I do not trust those
-- Shaky beehive positon, as it was placed on one small weight cell
+- Linux & so much processing power on an IoT device is overkill (I do not need a lot of data analysis onboard)
+- I did not really understand, what those Python scripts really do and I did not trust them
+- Shaky beehive position, as it was placed on one small weight cell
 - Raspberry Pi always fully on (ca. 150mA at 5V (0.75W)), no sleep function
+- Dependancy on ThingSpeak online service with its one year data storage
 - It's not really my solution xD
 
 Especially in my implementation:
 - Bad connection to sensors through utilizing prototyping breadboards as permanent circuit
 - Somehow the system didn't worked really long and I was annoyed and didn't know what to do
-- DHT22 sensor inside the beehive was broken as formic acid for bee treatment destroyed it
+- DHT22 sensor inside the beehive was broken as formic acid for bee treatment destroyed it. Also, in beforehand it was always wet because of condensation water in the top of the hive.
 
 **Other experiences building the project**
-- 
+- Difficulties with high temperature-dependancy in weight
+- the beefy car battery still ran out
 
 
+# Second solution (called HiveCom)
 
-- a lot of temperature-dependancy in the weight
+After my high school exam, the Honey-Pi solution didn't work properly after a short period of time, so I decided to start a completely new project. I didn't really knew why exactly I spent so much time/energy on it, but somehow I wanted to end this project recently and get it finally working, so now its 2024. I spent a lot of my free time between the study semesters (5th / 6th) of computer science & engineering on this and I am proud that it finally is done!
+
+**The live data is publicly available here**:
+[hivecom.neozeo.de](hivecom.neozeo.de)
+
+<iframe src="https://grafana.neozeo.de/d-solo/ca583dbe-edc2-456f-8761-410505da1b03/hive-com?orgId=1&refresh=1m&from=1712231036168&to=1712835836168&panelId=3" width="80%" height="50% frameborder="0"></iframe>
 
 
-## Second solution (called Hive Com)
-
-After my high school exam, the Honey-Pi solution didn't work properly after short time, so I decided to start a completely new project. I didn't really knew why exactly I spent so much energy on it, but somehow I wanted to end this project recently and get it finally working, so now its 2024. I spent a lot of my free time between the study semesters (5th / 6th) of computer science & engineering on this and I am proud that it finally is done!
 
 In this solution, I did all by myself:
 1. IoT device with an ESP32 microcontroller & LoRa interface
 2. Gateway device that accepts LoRa data & uploads it via WiFi
 3. Self-hosted Influx data base
 4. Self-hosted Grafana dashboard vizualization
-5. Self-designed LoRa "protocol" (I wanted to save money by circumventing a LoRaWAN gateway)
+5. Self-designed LoRa "protocol" (I wanted to save money by circumventing an official LoRaWAN gateway)
 
-IoT node placed under beehive:
+**The system consists of three big parts**:
+
+## IoT node at the beehive
+
+<img src="./img/IoT-Node.jpg" width="50%">
+<img src="./img/IoT-Node2.png" width="35%">
+
 1. Powered by manually rechargable LiPo batteries
 2. ESP32 as microcontroller for sensor data handling
 3. Sensors:
     - DHT22 for outside
 
+## LoRa/WiFi gateway
+
+<img src="./img/Gateway.jpg" width="40%">
+
+## Web solution
+
+<img src="./img/Grafana-Solution.png" width="80%">
+
 This repository should contain a documentation of a beehive monitoring solution.
 
-Tile-projects:
+Side-projects:
 
 1. Testing & playing around with Lilygo ESP32
 2. Don't know, what to do with weight calibrating
@@ -143,4 +163,38 @@ ToDo:
 Install it!
 
 
-## Analysis
+# Analysis
+
+
+
+# Failed experiments
+
+
+## Using cheap weight cells
+
+<img src="./img/cheap-weight-cells.png">
+
+I tried using cheap weight cells (ca. 13 euros sum) from Amazon, but the values had a difference of ~130g from the real weight. Also, for every measurement, the values differed from the previous values a lot and I didn't got a clear outcome. I wanted more precise values.
+
+## Designing a custom DHT22 sensor housing for the inside of the hive
+
+<img src="./img/dht22-cases.png">
+
+<img src="./img/dht22 inside.png" width=20%>
+
+I've heard that bees close holes of specific sizes in the beehive to prevent other insects to getting inside the hive. For this, they use their self produced propolis, that is also antibacterial and protects from diseases. Research in the internet did not reveal a specific hole size that gets closed, however it should be between 1-6mm. I designed different cases for the DHT22 to test that out.
+
+However it didn't matter because of the humidity always beeing wet and also broke
+¯\\\_(ツ)_/¯
+
+## Getting good temperature-weight-calibration
+
+<img src="./img/temperature-experiment.png" width=80%>
+
+Probably a little embarrassing, as I tried to measure the temperature-dependancy with a hair dryer in a verrry DIY way. I tried to put one DHT22 directly next to weight scale between the wooden boards, but it worked as well as it looked xD. I put the books around the weight scale to prevent the warm air going fast outside the scale again.
+
+Here is some data I collected in this experiment:
+
+<img src="./img/temperature-dependancy.png" width=70%>
+
+However, sometimes the upload process failed and I didn't know, what to do exactly with this data. Having a low-temperature oven or some 
