@@ -29,6 +29,8 @@ Also thanks to my tutor at the Schülerforschungszentrum Hamburg for supporting 
 <img src="./img/image4.png">
 (screenshot from the high school diploma documentation)
 
+<img src="./img/Old-scale-build.png" width="50%">
+
 #### Online service
 
 <img src="./img/image.png">
@@ -90,62 +92,140 @@ After my high school exam, the Honey-Pi solution didn't work properly after a sh
 **The live data is publicly available here**:
 [hivecom.neozeo.de](hivecom.neozeo.de)
 
-<iframe src="https://grafana.neozeo.de/d-solo/ca583dbe-edc2-456f-8761-410505da1b03/hive-com?orgId=1&refresh=1m&from=1712231036168&to=1712835836168&panelId=3" width="80%" height="50% frameborder="0"></iframe>
 
+In this solution, I did everything by myself:
+1. IoT device at the bee hive
+2. Lora/Wifi Gateway device
+3. Self-designed LoRa "protocol"
+4. Self-setup docker environment on virtual server with:
+    1. Influx data base
+    2. Grafana dashboard vizualization
 
-
-In this solution, I did all by myself:
-1. IoT device with an ESP32 microcontroller & LoRa interface
-2. Gateway device that accepts LoRa data & uploads it via WiFi
-3. Self-hosted Influx data base
-4. Self-hosted Grafana dashboard vizualization
-5. Self-designed LoRa "protocol" (I wanted to save money by circumventing an official LoRaWAN gateway)
 
 **The system consists of three big parts**:
 
-## IoT node at the beehive
+## 1. IoT node at the beehive
 
-<img src="./img/IoT-Node.jpg" width="50%">
-<img src="./img/IoT-Node2.png" width="35%">
+<img src="./img/IoT-Node.jpg" width="45%">
+<img src="./img/IoT-Node2.png" width="30%">
 
 1. Powered by manually rechargable LiPo batteries
-2. ESP32 as microcontroller for sensor data handling
-3. Sensors:
-    - DHT22 for outside
+2. ESP32 as microcontroller for sensor data handling & upload
+3. Sensors
+    - DHT22 for outside temperature & humidity measurement
+    - DS18B20 (watertight) for inside temperature measurement
+    - 4x smaler Bosche H10a weight cells plus 4x HX711 weight cell amplifier chips
+4. ATtiny84 as second microcontroller for HX711 management
+    (The ESP32 has not enough pins to connect all sensors, so I included an Attiny as an I2C-Slave Chip that connects the HX711 chips to the ESP32)
+5. Periodic data upload over LoRa
 
-## LoRa/WiFi gateway
+For the schematic, see "IoT Node Schematic.pdf" file in this repository
+
+Features:
+- Maybe half year of battery power supply by using deep sleep mode
+- Debug mode for checking sensor values at the hive
+- Changing upload interval length via debug mode button (1min, 5min, 20min, 60min, 120min, 360min)
+- Easy access to components & see-through case for extra fancyness
+
+
+## 2. LoRa/WiFi gateway
 
 <img src="./img/Gateway.jpg" width="40%">
 
-## Web solution
+Small device in the school that receives the LoRa Message broadcasted from the IoT node. It is connected to the school WiFi and uploads the bee hive & maintenance data to my Influx DB.
+
+- Left-button function: See last uploaded sensor values
+- Middle-button function: View upload log or maybe errors
+- Right-button function: RICK ROLL video! (I didn't know what to do with the third button that I've soldered on before I had a plan)
+
+## 3. Self-designed LoRa "Protocol"
+
+LoRa is a nice technology by Semtech that enables long range, low energy data transfer of small payloads. In the Maker-World, there exists a lot of boards that contain LoRa-chips. I chose an ESP32-microcontroller-board with a LoRa chip and also battery charging capability. The ESP32 is a powerful chip with versatile features, perfect for IoT-devices.
+
+However, LoRa does not have a builtin security and you broadcast it to everyone. As I want to see only the data from the Iot-Node, I also send a hash of the payload + password as a signature.
+
+
+
+
+
+First, the IoT node gatheres all the sensor data and then builds the packa
+
+
+
+
+
+I also could have chosen to just use the standard LoRaWAN protocol, but then I also would have needed to spend 100 euros or so on an open LoRaWAN gateway. I had two LoRa-capable devices laying around already so I chose using them.
+
+
+## 4. Web solution
 
 <img src="./img/Grafana-Solution.png" width="80%">
 
-This repository should contain a documentation of a beehive monitoring solution.
+View the live hive data at: [hivecom.neozeo.de](hivecom.neozeo.de)!
 
-Side-projects:
+Webservice architecture:
+- 1-blu.de virtual linux server (Ubuntu 20 LTS)
+- Docker:
+    - Portainer for docker management
+    - Nginx reverse proxy for subdomain management
+    - Influx DB for storing hive data (and maybe trigger webhooks for notifications in the future)
+    - Grafana for displaying data from Influx DB
 
-1. Testing & playing around with Lilygo ESP32
-2. Don't know, what to do with weight calibrating
-3. Calibrating weight cells & Checking weight cells against temperature dependancy
-4. Buying too cheap weight cells & analyze (3D-print, attach to wooden board, test)
+To get this project finally done, I had to do a lot of smaller projects that somehow converged to the final system. I didn't plan these steps, but at the end it somehow came all together.
+
+## Road map side-projects (not in order)
+
+1. Testing & playing around with Lilygo ESP32 board
+
+<img src="./img/Liligo-Pinout.png" width="50%">
+
+2. Think about how to get around with weight calibrating
+3. Buying (too cheap) weight cells & analyze them (3D-print, attach to wooden board, test)
+4. Calibrating weight cells & checking temperature dependancy
+
+<img src="./img/Weight-Calibrate.jpg" width="40%">
+
+<img src="./img/Weight-Calibrate2.png" width="30%">
+
+<img src="./img/Weight-Build.jpg" width="30%">
+<img src="./img/Weight-Build2.jpg" width="30%">
+
+Putting my speaker on top of the scale for final calibrating
+
 5. Buying more parts
-6. Thinking about weight scale construction
-7. Choosing Temperature & Humidity sensors
-8. Building the weight scale
+6. Choosing Temperature & Humidity sensors
+
+7. Building the weight scale
     1. Laser-Cutting the distance parts
     2. Cutting of the screws heads
-9. LoRa-Interfacing & Developing analysis scripts (Echo, Bluetooth terminal)
-10. LoRa Manual Range Limit Test
-11. Designing the LoRa protocol & onboard, hardware accelerated hashing
-12. Power supply & recharging
-13. ATtiny as additional slave IO device & Programming ATtiny
-14. ATtiny & ESP32 communication as master-slave via I2C
-15. Soldering the circuit & finding a small, some how "waterproof case"
-16. Getting into the schools wifi with a microcontroller
-17. Programming UI on IoT node and gateway
-18. Designing a case for the gateway (3D-printed, in Fusion 360)
-19. Getting rick roll video onto gateway device
+
+<img src="./img/Lasercut.jpg" width=50%>
+
+8. LoRa-Interfacing & Developing analysis scripts (Echo, Bluetooth to LoRa terminal)
+9. LoRa range limit test at spreading factor 12
+10. Designing the LoRa protocol & hardware accelerated hashing
+11. Power supply & recharging
+12. ATtiny as additional slave IO device & Programming ATtiny
+13. Get ATtiny-ESP32 I2C connection working
+14. Soldering the circuit & finding a small, some how "waterproof case"
+
+<img src="./img/Soldering.jpg" width="50%">
+
+15. Getting into the schools enterprise WPA2 wifi with a microcontroller
+16. Programming UI on IoT node and gateway
+17. Designing a case for the gateway (3D-printed, Fusion 360)
+
+<img src="./img/Gateway-Device-Case-Plan.jpeg" width="50%">
+
+<img src="./img/Gateway-Case.png" width="40%">
+
+<img src="./img/Gateway-Case-Print.jpg" width="30%">
+
+18.  Getting rick roll video onto gateway device
+
+<img src="./img/Gateway-Rickroll.png" width="40%">
+
+19. Approximate battery status from battery voltage
 20. Play around with Arduino InfluxDB library
 21. Configure linux server docker environment & configure Nginx to web-access the services
 22. Play around with InfluxDB & Grafana
@@ -158,7 +238,7 @@ Side-projects:
 ToDo:
 1. Insert images into grafana dashboard 
 2. configure automatical whatsapp notification on hive alarms
-3. Documenting the whole f***ing project to remember it
+3. Documenting the whole f***ing project
 
 Install it!
 
