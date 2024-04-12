@@ -1,6 +1,6 @@
-# hivecom
+# HiveCom
 
-> **Projects aim**: Automatically monitor a beehive to assist a beekeeper in interpreting the bees health and current state in short and long terms. 
+**This projects aim**: Automatically monitor a beehive to assist a beekeeper in interpreting the bees health and current state in short and long terms. 
 
 
 **Starting situation**: As I got a lot into electronics and making in the high school, my teacher provided me with the possiblity to do an extra learning project to contribute to my high school diploma 2021. And we do beekeeping as an extracurricular at our high school!
@@ -9,13 +9,13 @@
 
 **My ambition**: Besides getting into the material myself and trying out different protocols, techniques and parts, I want to have a nice, elegant solution in the end.
 
-**Roadmap**: The project / making part is divided into two parts as I built two mostly completely different systems for monitoring.
+**Roadmap**: The project is divided into two parts as I built two mostly completely different systems for monitoring.
 
 **This repository**: Summary / loose documentation of the project to store experiences into.
 
 **Credits**: Many thanks to my kind teacher for supporting me, not only for making this project even possible, but also for the anwering of all kinds of questions regarding beekeeping and funding this project.
 
-Also thanks to my tutor at the Schülerforschungszentrum Hamburg for supporting / aiding me building and testing the weight scale and the power supply.
+Also thanks to the Schülerforschungszentrum Hamburg for supporting / aiding me building and testing the weight scale and the power supply.
 
 # First solution (called Honey Pi) 
 
@@ -23,13 +23,27 @@ Also thanks to my tutor at the Schülerforschungszentrum Hamburg for supporting 
 
 <img src="./img/IMG_20210206_154843.jpg">
 
+<img src="./img/HoneyPi-System.jpeg" width="80%">
+
+The first solution, I built with the help of the [honey-pi.de](honey-pi.de)-tutorial. It is a very nice website from kind people sharing their experiences monitoring their bees with a Raspberry Pi system. Next to the Pi, the main components are a solar panel, car battery, cellular surf-stick for data upload and the weight scale as well as inside and outside temperature and humidity. The solar panel charges the car battery, the car battery poweres the Raspberry Pi, the Raspberry Pi collects the sensor data and uploads it to the Thingspeak IoT webservice.
+
+
+### Breadboard setup
+
 <img src="./img/image2.png">
 (screenshot from the high school diploma documentation)
+
+### IoT box setup
 
 <img src="./img/image4.png">
 (screenshot from the high school diploma documentation)
 
-<img src="./img/Old-scale-build.png" width="50%">
+### Weight scale setup
+
+<img src="./img/Old-scale-build.png" width="60%">
+
+(screenshot from the high school diploma documentation)
+
 
 #### Online service
 
@@ -37,17 +51,12 @@ Also thanks to my tutor at the Schülerforschungszentrum Hamburg for supporting 
 Thingspeak IoT software solution from Mathworks
 
 <img src="./img/image3.png">
-Own website utilizing Thingspeak API for more beautiful graph display
+Additional own website utilizing Thingspeak API for more beautiful graph display. (Never really used it)
 
 <br>
 
-## Experiences
-
-This first solution took around one year to build. I submitted this to my high school exam and got 15/15 points. Yeah!
-
 ## What are the systems components
 
-Based on [honey-pi.de](honey-pi.de), I combined the following parts:
 1. Small car battery, solar panel, charging module
 2. Raspberry Pi Zero (not Zero W) mini linux computer, containing prebuilt Python agents for data upload
 3. Sensors:
@@ -62,13 +71,17 @@ Based on [honey-pi.de](honey-pi.de), I combined the following parts:
     3. Modular dashboard vizualization of the data on graphs & widgets
 6. Own website that gatheres the data from Thingspeak and displays it in a prettier way
 
+## Experiences
+
+This first solution took around one year to build. I submitted this to my high school exam and got 15/15 points. Yeah!
+
 **Advantages of the system**:
 - completely autonomous, if you ignore mobile radio connection strength and if you choose a free mobile phone contract
 - beefy power supply & a lot of processing power
 - Convenient webservice for configuration
 
 **Disadvantages of the system**:
-- Linux & so much processing power on an IoT device is overkill (I do not need a lot of data analysis onboard)
+- Linux & so much processing power on an IoT device is overkill (I do not need a lot of data analysis onboard). The IoT device could run on a lot less energy.
 - I did not really understand, what those Python scripts really do and I did not trust them
 - Shaky beehive position, as it was placed on one small weight cell
 - Raspberry Pi always fully on (ca. 150mA at 5V (0.75W)), no sleep function
@@ -76,25 +89,25 @@ Based on [honey-pi.de](honey-pi.de), I combined the following parts:
 - It's not really my solution xD
 
 Especially in my implementation:
-- Bad connection to sensors through utilizing prototyping breadboards as permanent circuit
+- Bad connection to sensors because of using breadboards as permanent circuit
 - Somehow the system didn't worked really long and I was annoyed and didn't know what to do
 - DHT22 sensor inside the beehive was broken as formic acid for bee treatment destroyed it. Also, in beforehand it was always wet because of condensation water in the top of the hive.
 
 **Other experiences building the project**
-- Difficulties with high temperature-dependancy in weight
+- Difficulties with high temperature dependancy in weight
 - the beefy car battery still ran out
 
 
 # Second solution (called HiveCom)
 
-After my high school exam, the Honey-Pi solution didn't work properly after a short period of time, so I decided to start a completely new project. I didn't really knew why exactly I spent so much time/energy on it, but somehow I wanted to end this project recently and get it finally working, so now its 2024. I spent a lot of my free time between the study semesters (5th / 6th) of computer science & engineering on this and I am proud that it finally is done!
+After my high school exam, the Honey-Pi solution didn't work properly after a short period of time, and I decided to start a completely new project. I didn't really knew why exactly I spent so much time/energy on it, but somehow I wanted to end this project recently and get it finally working, so now its 2024. I spent a lot of my free time between the study semesters (5th / 6th) of computer science & engineering on this and I am proud that it finally is done! It installed at the hive on April 11th, 2024!
 
 **The live data is publicly available here**:
 [hivecom.neozeo.de](hivecom.neozeo.de)
 
 
 In this solution, I did everything by myself:
-1. IoT device at the bee hive
+1. IoT device at the beehive
 2. Lora/Wifi Gateway device
 3. Self-designed LoRa "protocol"
 4. Self-setup docker environment on virtual server with:
@@ -102,29 +115,29 @@ In this solution, I did everything by myself:
     2. Grafana dashboard vizualization
 
 
-**The system consists of three big parts**:
+**The system consists of four big parts**:
 
 ## 1. IoT node at the beehive
 
 <img src="./img/IoT-Node.jpg" width="45%">
 <img src="./img/IoT-Node2.png" width="30%">
 
-1. Powered by manually rechargable LiPo batteries
+1. Powered by manually rechargable LiPo batteries (2x 2500mAh at 3.7V in parallel)
 2. ESP32 as microcontroller for sensor data handling & upload
 3. Sensors
     - DHT22 for outside temperature & humidity measurement
     - DS18B20 (watertight) for inside temperature measurement
     - 4x smaler Bosche H10a weight cells plus 4x HX711 weight cell amplifier chips
 4. ATtiny84 as second microcontroller for HX711 management
-    (The ESP32 has not enough pins to connect all sensors, so I included an Attiny as an I2C-Slave Chip that connects the HX711 chips to the ESP32)
+    (The ESP32 has not enough pins to connect all HX711-chips, so I used an Attiny as an IO-middle-man that connects the HX711 chips to the ESP32 as an I2C slave)
 5. Periodic data upload over LoRa
 
-For the schematic, see "IoT Node Schematic.pdf" file in this repository
+For the **schematic**, see "IoT Node Schematic.pdf" file in this repository
 
 Features:
-- Maybe half year of battery power supply by using deep sleep mode
+- Maybe half year of battery power supply by using deep sleep mode (I will see)
 - Debug mode for checking sensor values at the hive
-- Changing upload interval length via debug mode button (1min, 5min, 20min, 60min, 120min, 360min)
+- Changing upload interval via debug mode button (1min, 5min, 20min, 60min, 120min, 360min)
 - Easy access to components & see-through case for extra fancyness
 
 
@@ -132,29 +145,35 @@ Features:
 
 <img src="./img/Gateway.jpg" width="40%">
 
-Small device in the school that receives the LoRa Message broadcasted from the IoT node. It is connected to the school WiFi and uploads the bee hive & maintenance data to my Influx DB.
+Small device in the school that receives the LoRa Message broadcasted from the IoT node. It is connected to the school WiFi and uploads beehive & maintenance data to my Influx database.
 
-- Left-button function: See last uploaded sensor values
+Features:
+- Left-button function: See most recent uploaded sensor values
 - Middle-button function: View upload log or maybe errors
 - Right-button function: RICK ROLL video! (I didn't know what to do with the third button that I've soldered on before I had a plan)
 
 ## 3. Self-designed LoRa "Protocol"
 
-LoRa is a nice technology by Semtech that enables long range, low energy data transfer of small payloads. In the Maker-World, there exists a lot of boards that contain LoRa-chips. I chose an ESP32-microcontroller-board with a LoRa chip and also battery charging capability. The ESP32 is a powerful chip with versatile features, perfect for IoT-devices.
+LoRa is a nice technology by Semtech that enables long range, low energy data transfer of small payloads. In the Maker-World, there exists a lot of boards that contain LoRa-chips that are relatively easy to interface with in the Arduino IDE. I chose an ESP32-microcontroller-board with a LoRa chip (also battery charging capability). The ESP32 is a powerful chip with versatile features, perfect for IoT-devices. And it is also programmable over USB via the Arduino IDE (or PlatformIO).
 
-However, LoRa does not have a builtin security and you broadcast it to everyone. As I want to see only the data from the Iot-Node, I also send a hash of the payload + password as a signature.
+However, LoRa does not have a builtin security and you broadcast it to everyone. As I want to see only the data from my IoT-Node, I kind of built my own security solution:
+
+**On the IoT-Node**
+1. The IoT-Node under the beehive collects all the data, and then appends it step by step to a string in float-format, comma-separated. This is the payload.
+2. The node generates a hash based on the payload string plus password-string appended. The password is stored in the flash memory of both the IoT node and gateway.
+3. The node sends the payload plus hash appended over LoRa (using spreading factor 12, standard bandwidth)
+
+**On the Gateway**
+If a LoRa package arrives at the gateway:
+1. The gateway stores the whole LoRa packet and stores payload and hash separately
+3. The gateway also tries to generate the same hash of the packet with its own password
+4. If the hash is equal, I treat the payload as authenticated. If not (or the format/syntax of the package is wrong, I treat it someone else's package)
+5. I upload only authenticated values to the Influx data base
+6. I upload not-authenticated messages to another field (maybe, an alien wants to text me?)
 
 
-
-
-
-First, the IoT node gatheres all the sensor data and then builds the packa
-
-
-
-
-
-I also could have chosen to just use the standard LoRaWAN protocol, but then I also would have needed to spend 100 euros or so on an open LoRaWAN gateway. I had two LoRa-capable devices laying around already so I chose using them.
+### Why not using LoRaWAN?
+I also could have chosen to just use the standard LoRaWAN protocol, but then I also would have needed to spend 100 euros or so on an open LoRaWAN gateway. I had two LoRa-capable devices laying around already so I chose using them instead.
 
 
 ## 4. Web solution
@@ -180,7 +199,7 @@ To get this project finally done, I had to do a lot of smaller projects that som
 <img src="./img/Liligo-Pinout.png" width="50%">
 
 2. Think about how to get around with weight calibrating
-3. Buying (too cheap) weight cells & analyze them (3D-print, attach to wooden board, test)
+3. Buying (too cheap) weight cells & analyze them (3D-print, attach to wooden board, test) (see failed experiments at the bottom)
 4. Calibrating weight cells & checking temperature dependancy
 
 <img src="./img/Weight-Calibrate.jpg" width="40%">
@@ -190,28 +209,28 @@ To get this project finally done, I had to do a lot of smaller projects that som
 <img src="./img/Weight-Build.jpg" width="30%">
 <img src="./img/Weight-Build2.jpg" width="30%">
 
-Putting my speaker on top of the scale for final calibrating
+Putting my 10.4kg speaker on top of the scale for final calibrating
 
-5. Buying more parts
-6. Choosing Temperature & Humidity sensors
+5. Choosing temperature & humidity sensors
+6. Buying more parts
 
 7. Building the weight scale
     1. Laser-Cutting the distance parts
-    2. Cutting of the screws heads
+    2. Cutting of the screws heads for stability reason
 
 <img src="./img/Lasercut.jpg" width=50%>
 
-8. LoRa-Interfacing & Developing analysis scripts (Echo, Bluetooth to LoRa terminal)
+8. LoRa-Interfacing & developing analysis scripts (Echo, Bluetooth to LoRa terminal)
 9. LoRa range limit test at spreading factor 12
-10. Designing the LoRa protocol & hardware accelerated hashing
+10. Designing the LoRa protocol & testing hardware accelerated hashing
 11. Power supply & recharging
-12. ATtiny as additional slave IO device & Programming ATtiny
+12. ATtiny as additional slave IO device & programming ATtiny
 13. Get ATtiny-ESP32 I2C connection working
-14. Soldering the circuit & finding a small, some how "waterproof case"
+14. Soldering the circuit & finding a small, some ow "waterproof case"
 
 <img src="./img/Soldering.jpg" width="50%">
 
-15. Getting into the schools enterprise WPA2 wifi with a microcontroller
+15. Getting into the schools enterprise WPA2 wifi with a microcontroller (very difficult task, I sat in the schools library for like 6 hours and tried and tried and became despair, but the patience was worth it!)
 16. Programming UI on IoT node and gateway
 17. Designing a case for the gateway (3D-printed, Fusion 360)
 
@@ -221,34 +240,33 @@ Putting my speaker on top of the scale for final calibrating
 
 <img src="./img/Gateway-Case-Print.jpg" width="30%">
 
-18.  Getting rick roll video onto gateway device
-
+18. Getting rick roll video onto gateway device
+ (Maybe I upload a tutorial on how to do this sometime as there is no tutorial for this)
 <img src="./img/Gateway-Rickroll.png" width="40%">
 
 19. Approximate battery status from battery voltage
+(I used the graph from https://learn.adafruit.com/li-ion-and-lipoly-batteries/voltages and approximated it with two linear functions)
+
 20. Play around with Arduino InfluxDB library
-21. Configure linux server docker environment & configure Nginx to web-access the services
+21. Configure linux server docker environment & configure Nginx to access the services from the internet
 22. Play around with InfluxDB & Grafana
-23. Raspberry Pi Home Weather Station Test with Sense Hat & Test Run
-24. Configure API keys & database for data upload
-25. Configure Grafana Dashboard
+23. Raspberry Pi Home Weather Station Test with Sense Hat & test run it to test InfluxDB & Grafana in long term
+24. Configure API keys & database for data upload for Hivecom
+25. Setup the Grafana dashboard widgets and make the data pretty using fancy data transformations and filters
 26. Test run for a few days & continuosly analyzing
 27. Testing wrong signature LoRa messages
+28. AND THEN FINALLY INSTALLING IT AT THE HIVE!
 
 ToDo:
-1. Insert images into grafana dashboard 
+1. Insert images into grafana dashboard to make it more beautiful
 2. configure automatical whatsapp notification on hive alarms
 3. Documenting the whole f***ing project
 
-Install it!
+# First analysis of the data
 
-
-# Analysis
-
-
+Coming soon. But I already see that the humidity sensor shows 99.9% humidity all the time :/, we will see
 
 # Failed experiments
-
 
 ## Using cheap weight cells
 
