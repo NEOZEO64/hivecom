@@ -237,9 +237,7 @@ But at the end, I found out that the expensive 4x H10a weight cells had a weight
 And then I calibrated the scale with my monitor speakers, which should be 10.4kg (the datasheet says that, I take that as true xD) 
 
 <img src="./img/Weight-Calibrate.jpg" width="40%">
-
 <img src="./img/Weight-Calibrate2.png" width="30%">
-
 <img src="./img/Weight-Build.jpg" width="30%">
 <img src="./img/Weight-Build2.jpg" width="30%">
 
