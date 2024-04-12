@@ -124,8 +124,8 @@ In this solution, I did everything by myself:
 
 ## 1. IoT node at the beehive
 
-<img src="./img/IoT-Node.jpg" width="45%">
-<img src="./img/IoT-Node2.png" width="30%">
+<img src="./img/IoT-Node.jpg" width="80%">
+<img src="./img/IoT-Node2.png" width="80%">
 
 1. Powered by manually rechargable LiPo batteries (2x 2500mAh at 3.7V in parallel)
 2. ESP32 as microcontroller for sensor data handling & upload
