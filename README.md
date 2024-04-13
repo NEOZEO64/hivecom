@@ -117,7 +117,7 @@ In this solution, I did everything by myself:
     1. Influx data base
     2. Grafana dashboard vizualization
 
-### Illustration of the second system
+### Illustration of the self-designed HiveCom system
 
 <img src="./img/Hivecom Components.png">
 
