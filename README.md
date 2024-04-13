@@ -119,10 +119,15 @@ In this solution, I did everything by myself:
     1. Influx data base
     2. Grafana dashboard vizualization
 
+### Illustration of the current system
+
+<img src="./img/Hivecom Components.png">
+
+(you can also view the PDF "Hivecom Components.pdf")
 
 **The system consists of four big parts**:
 
-## 1. IoT node at the beehive
+## IoT node (at the beehive)
 
 <img src="./img/IoT-Node.jpg" width="80%">
 <img src="./img/IoT-Node2.png" width="80%">
@@ -146,7 +151,7 @@ Features:
 - Easy access to components & see-through case for extra fancyness xD
 
 
-## 2. LoRa/WiFi gateway
+## LoRa/WiFi gateway
 
 <img src="./img/Gateway.jpg" width="40%">
 
@@ -157,7 +162,7 @@ Features:
 - Middle-button function: View upload log or maybe errors
 - Right-button function: RICK ROLL video! (I didn't know what to do with the third button that I've soldered on before I had a plan)
 
-## 3. Self-designed LoRa "Protocol"
+## Self-designed LoRa "Protocol"
 
 LoRa is a nice technology by Semtech that enables long range, low energy data transfer of small payloads. In the maker world, there exist a lot of boards that contain LoRa-chips that are relatively easy to interface with in the Arduino IDE. I chose an ESP32 microcontroller board with a LoRa chip (also battery charging capability). The ESP32 is a powerful chip with versatile features, perfect for IoT-devices. And it is also programmable over USB via the Arduino IDE (or PlatformIO).
 
@@ -181,7 +186,7 @@ If a LoRa package arrives at the gateway:
 I also could have chosen to just use the standard LoRaWAN protocol, but then I also would have needed to spend 100 euros or so on an open LoRaWAN gateway. I had two LoRa-capable devices laying around already so I chose using them instead. (But TheThingsNetwork is also a very cool tool too!)
 
 
-## 4. Web solution
+## Web solution
 
 <img src="./img/Grafana-Solution.png" width="80%">
 
@@ -197,21 +202,21 @@ Webservice architecture:
 
 To get this project finally done, I had to do a lot of smaller projects that somehow converged to the final system. I didn't plan these steps, but at the end it somehow came all together.
 
-## Road map side-projects (not in order)
+## Road map: Side-projects (not in order)
 
 **1. Testing & playing around with Lilygo ESP32 board**
 
-<img src="./img/Liligo-Pinout.png" width="50%">
+<img src="./img/Liligo.jpeg" width="80%">
 
-Hehe, I bought this one 2x from Aliexpress. There is near to no documentation to this, just this picture above! But the ESP32 is a pretty standard chip and there is also a pre-made Arduino IDE profile for this board. I like it because it has a lot of interfaces:
+Hehe, I bought this one 2x from Aliexpress. There is near to no documentation to this! But the ESP32 is a pretty standard chip and there is also a pre-made Arduino IDE profile for this board. I like it because it has a lot of interfaces:
 - WiFi / Bluetooth (I just use Wifi at the gateway side)
 - SD-Card interface
 - Small OLED screen (0.92" 128x64 pixel, fun little display!)
 - obviously LoRa
-- Battery supply and charging circuit! And an on/off switch for the battery. Actually I didn't know whether my LiPo battery cells didn't fit to the battery charging circuit, but I hoped and tried it out and I had luck! Although the circuit gets pretty warm on charging xD
+- Battery supply and charging circuit! And an on/off switch for the battery. Actually I didn't know whether my LiPo battery cells fit to the battery charging circuit, but I hoped and tried it out and I had luck! Although the circuit gets pretty warm on charging xD
 
 
-**2.  Think about how to get around with weight calibrating & temperature dependancy**
+**2. Think about how to get around with weight calibrating & temperature dependancy**
 
 The project stood still for long time, because I didn't know how I should get around with this problem! 
 
@@ -264,7 +269,7 @@ But I kind of solved the problem a little by having bigger holes at the top boar
 
 <img src="./img/weight scale solution.png">
 
-I had a discussion with some friend and my dad on how to get all the weight on all four weight cells without any warping in the wooden boards and parasitic stabilities. Then, I took the Mechanics I module in the university and it actually helped me to understand problem in a better way lol
+I had a discussion with some friends on how to get all the weight on all four weight cells without any warping in the wooden boards and parasitic stabilities. Then, I took the Mechanics I module in the university and it actually helped me to understand problem in a better way lol
 
 a. Laser-Cutting the distance parts (between wooden boards and weight cells)
 Yay, finally I can use the laser cutter at the Schülerforschungszentrum for good reason! I just drew some simple Fusion 360 sketches for this. And I got a small headache for standing too long next to the machine in the plastic steam xD, but it was fascinating!
@@ -275,17 +280,19 @@ THIS IS THE FINAL SCALE!
 
 <img src="./img/Final scale.jpg">
 
-(I am a little bit worried that the second weight cell bends too much, especially over time it could be a real problem!)
+(I am a little bit worried that the weight cell number 2 bends too much, especially over time it could be a real problem!)
 
 **6. LoRa-Interfacing & developing analysis scripts (Echo, Bluetooth to LoRa terminal)**
 
 Fun part, as you discover functions and unpack a box of new features! I love this
 
+To play around and try out all the features, I one script that echoes all the incoming LoRa messages. And I wrote another script that enables you to talk LoRa with your phone via a bluetooth connection to the ESP32 (The bluetooth terminal).
+
 **7. LoRa range limit test at spreading factor 12**
 
-So to get some experience, I put on an echo service on one ESP32 LoRa device. This waits for any package to receive and then sends it back immediately! On the other ESP32, I put on a bluetooth terminal. This way, I could connect my phone to the ESP32, send/receive messages to it in a serial way. The ESP32 then forwards the messages over LoRa and sends me the incoming messages over LoRa. I did this in the weekend with my family at our holiday house in the German heath. Equipped with my phone and the ESP32 Bluetooth/LoRa Terminal, I drove around in a spirally way around the house to test the range of the LoRa technology! It actually was a lot of fun and a weird, but somehow cool feeling to walk around with a weird little hacker device with a power bank and antenna lol.
+So to get some experience, I put on an echo service on one ESP32 LoRa device. This waits for any package to receive and then sends it back immediately! On the other ESP32, I put on a bluetooth terminal. This way, I could connect my phone to the ESP32, send/receive messages to it in a serial way. The ESP32 then forwards the messages over LoRa and sends me the incoming messages over LoRa. I did this in the weekend with my family at our holiday house in the German heath. Equipped with my phone and the ESP32 Bluetooth/LoRa Terminal, I drove around in a spirally way around the house to test the range of the LoRa technology! It actually was a lot of fun and it was weird, but somehow cool feeling to walk around with a weird little hacker device with a power bank and antenna lol
 
-The maximum range was something around 1.5km with a lot of  trees in between. The lowest range was 700m behind a church.
+The maximum range was something around 1.5km with a lot of  trees in between (SF12 configuration). The lowest range was 700m behind a church.
 
 I also got some experiences working with LoRaWAN spreading factor 12 too in an university project. The signals are very sensitive to weather (rain) and building walls.
 
@@ -294,12 +301,12 @@ At this part, I programmed small logging UIs on the ESP32s OLED screens for extr
 
 **8. Designing the LoRa protocol & testing hardware accelerated hashing**
 
-The ESP32 contains some hardware accelerated encryption system. I previously thought to encrypt the whole payload via RSA but it seemed to be very complicated to calculate with the limited processing resources at the ESP32. Also, I don't care whether someone else also reads the data too. I just want to be sure that the data comes from me, so I put this hash-thing behind the payload.
+The ESP32 chip includes hardware accelerated encryption. I previously thought about encrypting the whole payload via RSA but it seemed to be very complicated to calculate with the limited processing resources at the ESP32. Also, I don't care whether someone else also reads the data too. I just want to be sure that the data comes from me, so I put this hash-thing behind the payload.
 
 
 **9.  Power supply & recharging**
 
-Didn't think a lot about this, I just used not used LiPo batteries laying around in my cupboard. I previously wanted to use them to build a Raspberry Pi Tablet. I was nearly on to finishing the tablet, but I was not happy with battery management there and my soldering skills werent that great in 10th grade or so.
+Didn't think a lot about this, I just used old LiPo batteries laying around in my cupboard. I previously wanted to use them to build a Raspberry Pi Tablet. I was nearly on to finishing the tablet, but I was not happy with battery management there and my soldering skills werent that great in 10th grade or so.
 
 <img src="./img/RPi Tablet.jpg" width=100%>
 
