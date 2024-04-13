@@ -13,11 +13,9 @@
 
 **This repository**: Summary / loose documentation of the project to store experiences into.
 
-**Credits**: Many thanks to my kind teacher for supporting me, not only for making this project even possible, but also for the anwering of all kinds of questions regarding beekeeping and funding this project.
+**Credits**: Many thanks to my kind teacher for supporting me, not only for making this project even possible, but also for the anwering of all kinds of questions regarding beekeeping and funding this project. Also thanks to the Schülerforschungszentrum Hamburg for supporting / aiding me building and testing the weight scale and the power supply.
 
-Also thanks to the Schülerforschungszentrum Hamburg for supporting / aiding me building and testing the weight scale and the power supply.
-
-# First solution (called Honey Pi) 
+# Honey Pi (first solution)
 
 <img src="./img/HoneyPi-Fertig.jpg">
 
@@ -98,7 +96,7 @@ Especially in my implementation:
 - the beefy car battery still ran out
 
 
-# Second solution (called HiveCom)
+# HiveCom (Second solution)
 
 <img src="./img/Deploy1.jpg">
 
