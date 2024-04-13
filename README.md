@@ -303,7 +303,7 @@ Didn't think a lot about this, I just used not used LiPo batteries laying around
 
 <img src="./img/RPi Tablet.jpg" width=100%>
 
-I wanted to include two volume buttons and a single on/off button controlled by an attiny, but had no ideas about core linux drivers so I took it apart again.
+I wanted to use an ATtiny for battery management that turns on and off the power to get a single power button and I wanted that the Attiny uses its ADC to send its battery status over I2C, but I was not yet there at this point.
 
 
 **10. ATtiny as additional I2C device & programming ATtiny**
@@ -426,7 +426,7 @@ I am very happy that the system is finally in use, but I am still not allowing m
 
 # First analysis of the data
 
-Coming soon. But I already see that the humidity sensor shows 99.9% humidity all the time :/, we will see
+Coming soon. We will see!
 
 # Failed experiments
 
