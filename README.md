@@ -1,6 +1,4 @@
-# HiveCom
-
-<img src="./Hivecom Logo.bmp" width=50%>
+<img src="./Carls Hivecom.png" width=100%>
 
 **This projects aim**: Automatically monitor a beehive to assist a beekeeper in interpreting the bees health and current state in short and long terms. 
 
