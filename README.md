@@ -1,5 +1,7 @@
 # HiveCom
 
+<img src="./Hivecom Logo.bmp" width=50%>
+
 **This projects aim**: Automatically monitor a beehive to assist a beekeeper in interpreting the bees health and current state in short and long terms. 
 
 
@@ -119,7 +121,7 @@ In this solution, I did everything by myself:
     1. Influx data base
     2. Grafana dashboard vizualization
 
-### Illustration of the current system
+### Illustration of the second system
 
 <img src="./img/Hivecom Components.png">
 
