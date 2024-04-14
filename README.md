@@ -49,7 +49,7 @@ The first solution, I built with the help of the [honey-pi.de](honey-pi.de)-tuto
 Thingspeak IoT software solution from Mathworks
 
 <img src="./img/image3.png">
-Additional own website utilizing Thingspeak API for more beautiful graph display. (Never really used it)
+Additional own website utilizing Thingspeak API for more beautiful graph display. (I never really used it)
 
 <br>
 
@@ -58,16 +58,16 @@ Additional own website utilizing Thingspeak API for more beautiful graph display
 1. Small car battery, solar panel, charging module
 2. Raspberry Pi Zero (not Zero W) mini linux computer, containing prebuilt Python agents for data upload
 3. Sensors:
-    - 1x DHT22 sensor for temperature & humidity inside the beehive (custom case for bee protection)
-    - 1x DHT22 sensor for temperature & humideity outside
-    - 1x Bosche H30a weight cell + HX711 weightcell amplifier for continuously weighting the whole beehive
-    - 1x voltage divider for checking battery voltage (of around 12V)
+    - DHT22 sensor for temperature & humidity inside the beehive (custom case for bee protection)
+    - DHT22 sensor for temperature & humideity outside
+    - Bosche H30a weight cell + HX711 weightcell amplifier for continuously weighting the whole beehive
+    - Voltage divider for checking battery voltage (of around 12V)
 4. Uploading via USB-Surfstick with sim card over mobile radio
 5. Thingspeak webservice from Mathworks
     1. Stores data for one year for free
     2. Provides nice Rest API for communication between Raspberry Pi & Thingspeak
     3. Modular dashboard vizualization of the data on graphs & widgets
-6. Own website that gatheres the data from Thingspeak and displays it in a prettier way
+6. Own website that gathers the data from Thingspeak and displays it in a prettier way
 
 ## Experiences
 
@@ -79,8 +79,8 @@ This first solution took around one year to build. I submitted this to my high s
 - Convenient webservice with easy configuration
 
 **Disadvantages of the system**:
-- Linux & so much processing power on an IoT device is overkill (I do not need a lot of data analysis onboard). The IoT device could run on a lot less energy.
-- I did not really understand, what those Python scripts really do and I did not trust them
+- Linux & this much processing power on an IoT device is overkill (I do not need a lot of data analysis onboard). The IoT device could run on a lot less energy.
+- I did not really understand, what those Python scripts really do and I didn't trust them
 - Shaky beehive position, as it was placed on one small weight cell
 - Raspberry Pi always fully on (ca. 150mA at 5V (0.75W)), no sleep function
 - Dependancy on ThingSpeak online service with its one year data storage
@@ -88,7 +88,7 @@ This first solution took around one year to build. I submitted this to my high s
 
 Especially in my implementation:
 - Bad connection to sensors because of using breadboards as permanent circuit
-- Somehow the system didn't worked really long and I was annoyed and didn't know what to do
+- Somehow the system didn't worked for really long and I was annoyed and didn't know what to do
 - DHT22 sensor inside the beehive was broken as formic acid for bee treatment destroyed it. Also, in beforehand it was always wet because of condensation water in the top of the hive.
 
 **Other experiences building the project**
@@ -100,8 +100,10 @@ Especially in my implementation:
 
 <img src="./img/Deploy1.jpg">
 
-<img src="./img/Deploy2.jpg">
+<img src="./img/Deploy2.png" width=80%>
 
+<img src="./img/Temperature Sensor.png" width=80%>
+(inside temperature sensor)
 
 After my high school exam, the Honey-Pi solution didn't work properly after a short period of time, and I decided to start a completely new project. I didn't really knew why exactly I spent so much time/energy on it, but somehow I wanted to end this project recently and get it finally working, so now its 2024. I spent a lot of my free time between the study semesters (5th / 6th) of computer science & engineering on this and I am proud that it finally is done! It installed at the hive on April 11th, 2024!
 
@@ -135,7 +137,7 @@ In this solution, I did everything by myself:
 3. Sensors
     - DHT22 for outside temperature & humidity measurement
     - DS18B20 (watertight) for inside temperature measurement
-    - 4x smaler Bosche H10a weight cells plus 4x HX711 weight cell amplifier chips
+    - 4x smaller Bosche H10a weight cells plus 4x HX711 weight cell amplifier chips (this time for weight cells instead of one for better stability)
 4. ATtiny84 as second microcontroller for HX711 management
     (The ESP32 has not enough pins to connect all HX711-chips, so I used an Attiny as an IO-middle-man that connects the HX711 chips to the ESP32 as an I2C slave)
 5. Periodic data upload over LoRa
@@ -153,7 +155,7 @@ Features:
 
 <img src="./img/Gateway.jpg" width="40%">
 
-Small device in the school that receives the LoRa Message broadcasted from the IoT node. It is connected to the school WiFi and uploads beehive & maintenance data to my Influx database.
+Small device in the school that receives the LoRa message broadcasted from the IoT node. It is connected to the school WiFi and uploads beehive & maintenance data to my Influx database.
 
 Features:
 - Left-button function: See most recent uploaded sensor values
@@ -173,11 +175,11 @@ However, LoRa does not have a builtin security and you have to broadcast it to e
 
 **On the Gateway**
 If a LoRa package arrives at the gateway:
-1. The gateway stores the whole LoRa packet and stores payload and hash separately
-3. The gateway also tries to generate the same hash of the packet with its equal password in flash
-4. If the hash is equal, I treat the payload as authenticated. If not (or the format/syntax of the package is wrong), I treat it as someone else's package
-5. I upload only authenticated values to the Influx data base
-6. But I also store the not-authenticated messages separately in the database! (maybe, an alien wants to text me? xD)
+1. The gateway stores the whole LoRa packet and separates payload and hash
+2. The gateway also tries to generate the same hash of the packet with its equal password in flash
+3. If the hash is equal, I treat the payload as authenticated. If it is not authenticated (or the format/syntax of the package is wrong), I treat it as someone else's package
+4. I upload only authenticated values to the Influx data base
+5. But I also store the not-authenticated messages separately in the database! (maybe, an alien wants to text me? xD)
 
 
 ### Why not use LoRaWAN?
@@ -200,18 +202,18 @@ Webservice architecture:
 
 To get this project finally done, I had to do a lot of smaller projects that somehow converged to the final system. I didn't plan these steps, but at the end it somehow came all together.
 
-## Road map: Side-projects (not in order)
+## Side projects that converged to this system
 
 **1. Testing & playing around with Lilygo ESP32 board**
 
 <img src="./img/Liligo.jpeg" width="80%">
 
-Hehe, I bought this one 2x from Aliexpress. There is near to no documentation to this! But the ESP32 is a pretty standard chip and there is also a pre-made Arduino IDE profile for this board. I like it because it has a lot of interfaces:
+Hehe, I bought this one 2x from Aliexpress. There is near to no documentation of this! But the ESP32 is a pretty standard chip and there is also a pre-made Arduino IDE profile for this board. I like it because it has a lot of interfaces:
 - WiFi / Bluetooth (I just use Wifi at the gateway side)
 - SD-Card interface
 - Small OLED screen (0.92" 128x64 pixel, fun little display!)
 - obviously LoRa
-- Battery supply and charging circuit! And an on/off switch for the battery. Actually I didn't know whether my LiPo battery cells fit to the battery charging circuit, but I hoped and tried it out and I had luck! Although the circuit gets pretty warm on charging xD
+- Battery supply and charging circuit! And an on/off switch for the battery. Actually I didn't know whether my LiPo battery cells fit to the battery charging circuit, but I hoped and tried it out and I had luck! Although the circuit gets pretty warm while charging xD
 
 
 **2. Think about how to get around with weight calibrating & temperature dependancy**
@@ -220,22 +222,22 @@ The project stood still for long time, because I didn't know how I should get ar
 
 In the Honey Pi project I experienced a lot of temperature dependence and I was not happy with the stability of the weight scale. 
 
-So for the new solution, I first bought cheap weight cells from Amazon (those cheap sensors you find in weight scales for human). But somehow I didn't know how to use them properly or they are really bad and I was not lucky. (See failed experiment at the bottom on this page)
+So for the new solution, I first bought cheap weight cells from Amazon (those cheap sensors you find in weight scales for humans). But somehow I didn't know how to use them properly or they are really bad and I was not lucky. (See failed experiment at the bottom on this page)
 
-Then, I bought very expensive weight cells (H10a from Bosche), sum was around 160 euros for just the cells. I really wanted to get every precision I can (even if my teacher said that it should not be needed). By the way, the school's beekeeping money paid it, thank you!
+Then, I bought very expensive weight cells (H10a from Bosche), sum was around 160 euros for just the cells. I really wanted to get every precision I can (even if my teacher said that it should not be needed). By the way, the school's beekeeping money paid it, thanks!
 
-Another problem was, that I didn't know how to calibrate. So if you hook up weight scale to an HX711 amplifier and then the arduino, you first of all get raw values ranging from negative levels to the millions. In theory, you should just build the scale, put nothing on it and take this raw value as a zero value. Then, you put a known weight on it (Higher weights are better for precision) and scale the value you get from the HX711 by the coefficient you get from it. Should be pretty easy, just linear. There are a lot of tutorials for this in the internet.
+Another problem was, that I didn't know how to calibrate. So if you hook up weight scale to an HX711 amplifier and then the arduino, you first of all get raw values ranging from negative levels to the millions. In theory, you should just build the scale, put nothing on it and take this raw value as a zero value. Then, you put a known weight on it (Higher weights are better for precision) and scale the value you get from the HX711 by the coefficient you self-calculate. It should be pretty easy, just linear. There are a lot of tutorials for this in the internet.
 
 But there are problems: 
 1. I have now 4 weight scales and the old wooden boards are bent over time outside. The weight is distributed not in an equal way on each weight cell.
 2. What should I do with temperature dependence? How much do I have to care about it? Is it linear? Quadratic? Logarithmic? And I have no precise temperature sensor!
 3. Where the heck do I get a precise, high value weight from to calibrate?
 
-So I spend a few days at the weekend in the Schülerforschungszentrum Hamburg, collecting data the best I could via using ultra precise chemical weight scales with multiple buckets of water. You find the data in the "Bosche Wägezellen H10A Analyse.xlsx" file. I wrote some small python scripts to analyze the values I got through the Serial terminal.
+So I spend a few days at the weekend in the Schülerforschungszentrum Hamburg, collecting data the best I could via ultra precise chemical weight scales with multiple buckets of water. You find the data in the "Bosche Wägezellen H10A Analyse.xlsx" file. I wrote some small python scripts to analyze the values that I got through the Serial terminal.
 
-By the way, for every value you want to get from the HX711, you pull 5 values and get the average of it as it is floating a little bit (big problem on the cheap weight cells)
+By the way, for every value you want to get from the HX711, you pull like 5 values and get the average of it as it is floating a little bit (big problem on the cheap weight cells)
 
-But at the end, I found out that the expensive 4x H10a weight cells had a weight difference of ±20g when I put it in the freezer or lightly blowed on it with a hot air gun. A lot less then I expected and less than the first HoneyPi system that used the single H30a weight!
+But at the end, I found out that the expensive 4x H10a weight cells had a weight difference of ±20g when I put it in the freezer or lightly blowed on it with a hot air gun. This is a lot less temperature-dependent then I expected and less than the first HoneyPi system that used the single H30a weight!
 
 And then I calibrated the scale with my monitor speakers, which should be 10.4kg (the datasheet says that, I take that as true xD) 
 
@@ -269,12 +271,18 @@ But I kind of solved the problem a little by having bigger holes at the top boar
 
 I had a discussion with some friends on how to get all the weight on all four weight cells without any warping in the wooden boards and parasitic stabilities. Then, I took the Mechanics I module in the university and it actually helped me to understand problem in a better way lol
 
-a. Laser-Cutting the distance parts (between wooden boards and weight cells)
-Yay, finally I can use the laser cutter at the Schülerforschungszentrum for good reason! I just drew some simple Fusion 360 sketches for this. And I got a small headache for standing too long next to the machine in the plastic steam xD, but it was fascinating!
+Yay, finally I can use the laser cutter at the Schülerforschungszentrum for good reason! I needed spacers between the weight cells and the wooden board. For conveniance, I chose to use three layers of acrylic glass stacked on top of each other.
+
+I just drew some simple Fusion 360 sketches for this. And I got a small headache for standing too long next to the machine in the plastic steam xD, but it was fascinating!
 
 <img src="./img/Lasercut.jpg" width=50%>
 
-THIS IS THE FINAL SCALE!
+All the weight cells are screwed to the bottom with M4 screws in the corners. On top, only one corner is screwed down, the other three corners just have holes to let in the headless screws.
+
+This keeps the top board tight, but still enables a little bit of wiggeling around to ensure all the weight is loaded on the weight cells.
+
+
+**THIS IS THE FINAL SCALE!**
 
 <img src="./img/Final scale.jpg">
 
@@ -284,11 +292,11 @@ THIS IS THE FINAL SCALE!
 
 Fun part, as you discover functions and unpack a box of new features! I love this
 
-To play around and try out all the features, I one script that echoes all the incoming LoRa messages. And I wrote another script that enables you to talk LoRa with your phone via a bluetooth connection to the ESP32 (The bluetooth terminal).
+To play around with LoRa, I wrote a script that echoes all the incoming LoRa messages. And another script that enables you to talk LoRa with your phone via a bluetooth connection to the ESP32 (The bluetooth terminal).
 
 **7. LoRa range limit test at spreading factor 12**
 
-So to get some experience, I put on an echo service on one ESP32 LoRa device. This waits for any package to receive and then sends it back immediately! On the other ESP32, I put on a bluetooth terminal. This way, I could connect my phone to the ESP32, send/receive messages to it in a serial way. The ESP32 then forwards the messages over LoRa and sends me the incoming messages over LoRa. I did this in the weekend with my family at our holiday house in the German heath. Equipped with my phone and the ESP32 Bluetooth/LoRa Terminal, I drove around in a spirally way around the house to test the range of the LoRa technology! It actually was a lot of fun and it was weird, but somehow cool feeling to walk around with a weird little hacker device with a power bank and antenna lol
+So to get some experience, I put the echo service on one ESP32 LoRa device. This waits for any package to receive and then sends it back immediately! On the other ESP32, I put on a bluetooth terminal. This way, I could connect my phone to the ESP32, send/receive messages to it in a serial way. The ESP32 then forwards the messages over LoRa and sends me the incoming messages over LoRa. I did this in the weekend with my family at our holiday house in the German heath. Equipped with my phone and the ESP32 Bluetooth/LoRa Terminal, I drove around in a spirally way around the house to test the range of the LoRa technology! It actually was a lot of fun and it was weird, but somehow a cool feeling to walk around with a weird little hacker device with a power bank and antenna lol
 
 The maximum range was something around 1.5km with a lot of  trees in between (SF12 configuration). The lowest range was 700m behind a church.
 
@@ -304,7 +312,7 @@ The ESP32 chip includes hardware accelerated encryption. I previously thought ab
 
 **9.  Power supply & recharging**
 
-Didn't think a lot about this, I just used old LiPo batteries laying around in my cupboard. I previously wanted to use them to build a Raspberry Pi Tablet. I was nearly on to finishing the tablet, but I was not happy with battery management there and my soldering skills werent that great in 10th grade or so.
+I didn't think a lot about this, I just used old LiPo batteries laying around in my cupboard. I previously wanted to use them to build a Raspberry Pi tablet (I called it "PiPad" lol). I was nearly on to finishing the tablet, but I was not happy with battery management there and my soldering skills werent that great in 10th grade or so.
 
 <img src="./img/RPi Tablet.jpg" width=100%>
 
@@ -313,17 +321,17 @@ I wanted to use an ATtiny for battery management that turns on and off the power
 
 **10. ATtiny as additional I2C device & programming ATtiny**
 
-The problem was, that I needed to connect a lot of sensors to the ESP32! And it didn't have enough pins. One solution would be to use multiple analog multiplexers in reverse I think. But I just love Attinys. They are so cool: they are cheap (around 2 euros), very small, need little current, work from multiple voltage supplys and include a lot of interfaces, I think even software emulated ones! And I wanted to try building an I2C slave (I already did this as a university project, but only with one byte data payload) and also need this for my Raspberry Pi tablet in the future maybe.
+The problem was, that I needed to connect a lot of sensors to the ESP32! And it didn't have enough pins. One solution would be to use multiple analog multiplexers in reverse I think. But I just love Attinys. They are so cool: They are cheap (around 2 euros), very small, need little current, work from multiple voltage supplys and include a lot of interfaces, I think even software emulated ones! And I wanted to try building an I2C slave (I already did this as a university project, but only with one byte data payload) and also need this for my Raspberry Pi tablet in the future maybe.
 
-O, this was a little bit tricky, but I really was interested in getting an own I2C slave working. The ATtiny is also programmed with the arduino bootloader to enable working with standard arduino libraries. To ensure low current draw, I used an ESP32 pin as the power supply for the ATtiny and the HX711 chips. I had a lot of problems getting the I2C connection working as I forgot to turn on the ATtiny power supply on and wait for it to boot lol. But then, trying out with and without pullup resistors, checking the OLED display which is also connected via I2C, it worked like after 8 hours of developing / troubleshooting! 
+O, this was a little bit tricky, but I really was interested in getting an own I2C slave working. The ATtiny is also programmed with the arduino bootloader to enable working with standard arduino libraries. To ensure low current draw, I used an ESP32 GPIO pin as the power supply for the ATtiny and the HX711 chips (the datasheet says that you can drive around 20mA with a GPIO and thats enough). I had a lot of problems getting the I2C connection working as I forgot to turn on the ATtiny power supply on and wait for it to boot lol. But then, trying out with and without pullup resistors, checking the OLED display which is also connected via I2C, it worked like after 8 hours of developing / troubleshooting! 
 
-During troubleshooting, I got a lot of weird display images:
+During troubleshooting, I got a lot of weird display images, as the display is also connected over I2C. xD
 <img src="./img/Display problems.jpg">
 
 I decided to outsource the weight scale calibration calculations to the ESP32 and let the Attiny just upload the raw values via I2C.
 
 
-**11. Soldering the circuit & finding a small, some ow "waterproof case"**
+**11. Soldering the circuit & finding a small, somehow "waterproof" case**
 
 Yeah I am not proud of this soldering, but I works. It actually was the easiest part I think. And I had luck not to short anything.
 
@@ -331,11 +339,11 @@ Yeah I am not proud of this soldering, but I works. It actually was the easiest 
 
 **12.  Getting into the schools enterprise WPA2 Wifi**
 
-As I stil am in close contact with my school teacher who is IT administrator, he gave my Wifi credentials in advance.
+As I still am in close contact with my school teacher who is IT administrator, he gave my Wifi credentials in advance.
 
 I had a lot of respect for this problem as there is little resource out there. I didn't know if I need to switch the whole project to the ESP-IDF development environment because of not having some hardware WiFi driver capabilities.
 
-On standard operating systems, they include a lot of configuration options, but at the microcontroller you have to find them by looking into the wifi driver code!
+On standard operating systems, they include a lot of configuration options, but at the microcontroller you have to first even find them by looking into the wifi driver code!
 
 The arduino wifi library is actually pretty good, but the documentation is not great and I did not got more knowledge from reading the library source code. 
 
@@ -362,11 +370,11 @@ I was lucky, because I swallowed the price to buy a caliper in advance!
 
 <img src="./img/Gateway-Case-Print.jpg" width="30%">
 
-**15.  Getting rick roll video onto gateway device**
+**15. Getting rick roll video onto gateway device**
 
-Hehe, it was fun to download the video from Youtube in MP4, cut it to like 17 seconds, put it to a lot of BMP images and scaling it down to black / white 128x64 pixel wide. 
+Hehe, it was fun to download the video from Youtube in MP4, cut it to like 17 seconds, convert it to a lot of BMP images and scaling it down to black / white 128x64 pixels. 
 
-There is a nice website out there that puts those pictures to arduino c++ code format. And then you just have to play around with pointers to go trough the pictures.
+There is a nice website out there that puts those pictures to arduino c++ code format. And then you just have to play around with pointers to go trough the pictures and the delay in between to get the right speed.
 
 Maybe I upload a tutorial on how to do this sometime as there is no tutorial just yet
 <img src="./img/Gateway-Rickroll.png" width="40%">
@@ -379,7 +387,7 @@ With the help of the graph on Adafruits website (https://learn.adafruit.com/li-i
 
 **17. Play around with Arduino InfluxDB library**
 
-O yeah it was nice to see the information flow graph growing at this point
+O yeah it was nice to see the information flow path growing at this point
 
 **18. Configure linux server docker environment & configure Nginx to access the services from the internet**
 
@@ -421,13 +429,11 @@ I obviously need to try to send messages to myself to be able to record someone 
 
 April 11th of 2024!
 
-I am very happy that the system is finally in use, but I am still not allowing myself to take too early analyzing steps.
+I am very happy that the system is finally in use, but I am still not allowing myself to take too early analyzing results.
 
 
 ### ToDo
-1. Insert images into grafana dashboard to make it more beautiful
-2. configure automatical whatsapp notification on hive alarms
-3. Documenting the whole f***ing project
+- configure automatical whatsapp notification on hive alarms
 
 # First analysis of the data
 
@@ -449,7 +455,7 @@ I tried using cheap weight cells (ca. 13 euros sum) from Amazon, but the values 
 
 I've heard that bees close holes of specific sizes in the beehive to prevent other insects to getting inside the hive. For this, they use their self produced propolis, that is also antibacterial and protects from diseases. Research in the internet did not reveal a specific hole size that gets closed, however it should be between 1-6mm. I designed different cases for the DHT22 to test that out.
 
-However it didn't matter because of the humidity always beeing wet and also broke
+However it didn't matter because of the humidity sensor always beeing wet and also broke
 ¯\\\_(ツ)_/¯
 
 ## Getting good temperature-weight-calibration
@@ -462,4 +468,4 @@ Here is some data I collected in this experiment:
 
 <img src="./img/temperature-dependancy.png" width=70%>
 
-However, sometimes the upload process failed and I didn't know, what to do exactly with this data. Having a low-temperature oven or some 
+However, sometimes the upload process failed and I didn't know, what to do exactly with this data. Having a low-temperature oven or an calibrated temperature sensor would help xD
